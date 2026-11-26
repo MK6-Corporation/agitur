@@ -1,0 +1,4 @@
+# Leads capturados (dados pessoais – não versionar)
+data/
+node_modules/
+.env
