@@ -861,7 +861,7 @@ button,input,select{font:inherit;color:inherit}
     group: 'https://chat.whatsapp.com/HJt4itqDR6QIKngeEu1HzL',
     deadline: '2026-11-30T23:59:59-03:00',                       // fim da campanha (horário de Brasília)
     defaultMsg: 'Olá, Agitur! Vim pela página da Black Friday e quero saber das ofertas.',
-    leadsApi: '/api/leads'                                        // endpoint que grava os leads (painel em /admin)
+    leadsApi: 'https://script.google.com/macros/s/AKfycbzGQrOPVFg_OM1lMItjdLPV3AsYt8KzRy6ReN-4d5E27DJKbnkN_RSi2G4zURHOK-rB/exec' // Google Apps Script que grava os leads na planilha (painel em /admin)
   };
 
   /* UTMs da campanha: guardadas na sessão para acompanhar o lead mesmo se ele navegar pela página */
@@ -873,12 +873,12 @@ button,input,select{font:inherit;color:inherit}
   }catch(e){}
 
   var saveLead = function(data){
-    var payload = JSON.stringify(Object.assign({}, data, utm, {referrer: document.referrer, pagina: location.href}));
+    var payload = JSON.stringify(Object.assign({action:'lead'}, data, utm, {referrer: document.referrer, pagina: location.href, userAgent: navigator.userAgent}));
     try{
       if (window.fetch){
-        fetch(CONFIG.leadsApi, {method:'POST', headers:{'Content-Type':'application/json'}, body:payload, keepalive:true}).catch(function(){});
+        fetch(CONFIG.leadsApi, {method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:payload, keepalive:true}).catch(function(){});
       } else if (navigator.sendBeacon){
-        navigator.sendBeacon(CONFIG.leadsApi, new Blob([payload], {type:'application/json'}));
+        navigator.sendBeacon(CONFIG.leadsApi, new Blob([payload], {type:'text/plain;charset=utf-8'}));
       }
     }catch(e){}
   };
