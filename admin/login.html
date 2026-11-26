@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin | Agitur Viagens</title>
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;display:grid;place-items:center;padding:24px;font-family:Manrope,system-ui,sans-serif;color:#e3e8ef;
+  background:radial-gradient(800px 500px at 80% 0%,rgba(56,88,170,.35),transparent 60%),linear-gradient(180deg,#070d1f,#0a1430)}
+.card{width:100%;max-width:400px;padding:40px 32px 32px;border-radius:28px;background:linear-gradient(160deg,rgba(23,40,86,.92),rgba(9,17,40,.94));
+  border:1px solid rgba(201,209,220,.32);box-shadow:0 30px 80px -20px rgba(0,0,0,.65)}
+.logo{width:76px;height:76px;border-radius:50%;margin:0 auto 18px;display:block}
+h1{font-family:Marcellus,serif;font-weight:400;text-align:center;font-size:1.6rem;color:#fff}
+p.sub{text-align:center;color:#8d98ad;font-size:.9rem;margin:6px 0 26px}
+label{display:block;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#c3cbd8;margin-bottom:7px}
+input{width:100%;height:50px;padding:0 16px;border-radius:14px;background:rgba(4,8,20,.55);border:1px solid rgba(201,209,220,.32);color:#fff;font:inherit;margin-bottom:14px}
+input:focus{outline:none;border-color:#c3cbd8;box-shadow:0 0 0 4px rgba(169,192,255,.14)}
+button{width:100%;height:54px;border:0;border-radius:999px;cursor:pointer;font:inherit;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#070d1f;margin-top:6px;
+  background:linear-gradient(180deg,#fff 0%,#e6ebf2 38%,#a9b3c4 52%,#e9edf3 78%,#fff 100%)}
+.err{display:none;background:rgba(255,107,122,.12);border:1px solid rgba(255,107,122,.4);color:#ff8f9b;padding:10px 14px;border-radius:12px;font-size:.85rem;margin-bottom:16px;text-align:center}
+</style>
+</head>
+<body>
+<form class="card" method="post" action="/admin/login">
+  <img class="logo" src="/assets/logo-agitur.webp" alt="Agitur Viagens">
+  <h1>Painel de Leads</h1>
+  <p class="sub">Acesso restrito à equipe Agitur</p>
+  <div class="err" id="err">Usuário ou senha inválidos.</div>
+  <label for="user">Usuário</label>
+  <input id="user" name="user" autocomplete="username" required autofocus>
+  <label for="pass">Senha</label>
+  <input id="pass" name="pass" type="password" autocomplete="current-password" required>
+  <button type="submit">Entrar</button>
+</form>
+<script>
+var q = new URLSearchParams(location.search).get('erro'), el = document.getElementById('err');
+if (q){ el.style.display = 'block'; if (q === 'bloqueado') el.textContent = 'Muitas tentativas. Aguarde 15 minutos.'; }
+</script>
+</body>
+</html>
