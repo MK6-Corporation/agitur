@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Leads | Admin Agitur</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070d1f;--panel:#0e1b3e;--line:rgba(201,209,220,.14);--line2:rgba(201,209,220,.3);--txt:#e3e8ef;--mute:#8d98ad;--wa:#25d366;
+  --chrome:linear-gradient(180deg,#fff 0%,#e6ebf2 38%,#a9b3c4 52%,#e9edf3 78%,#fff 100%)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Manrope,system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;font-size:14px}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+.top{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 24px;background:rgba(7,13,31,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{width:40px;height:40px;border-radius:50%}
+.brand b{font-family:Marcellus,serif;font-weight:400;font-size:1.15rem;letter-spacing:.1em;color:#fff}
+.brand small{display:block;font-size:.62rem;letter-spacing:.28em;color:var(--mute);font-weight:700}
+.actions{display:flex;gap:10px;align-items:center}
+.btn{height:40px;padding:0 18px;border-radius:999px;border:1px solid var(--line2);background:rgba(255,255,255,.04);cursor:pointer;font-weight:700;font-size:.82rem;display:inline-flex;align-items:center;gap:8px;text-decoration:none;white-space:nowrap}
+.btn:hover{background:rgba(255,255,255,.09)}
+.btn.primary{background:var(--chrome);color:#070d1f;border:0}
+main{max-width:1400px;margin:0 auto;padding:28px 24px 60px}
+h1{font-family:Marcellus,serif;font-weight:400;font-size:1.8rem;color:#fff;margin-bottom:4px}
+.lead-sub{color:var(--mute);margin-bottom:24px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.stat{padding:18px 20px;border-radius:18px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.015))}
+.stat small{display:block;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);font-weight:700}
+.stat b{display:block;font-size:1.9rem;font-weight:800;color:#fff;margin-top:4px;font-variant-numeric:tabular-nums;line-height:1.2}
+.stat span{font-size:.8rem;color:var(--mute)}
+.dest-bars{padding:18px 20px;border-radius:18px;border:1px solid var(--line);margin-bottom:20px}
+.dest-bars h2{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-bottom:12px}
+.bar{display:grid;grid-template-columns:180px 1fr 40px;gap:12px;align-items:center;margin:6px 0;font-size:.85rem}
+.bar i{display:block;height:10px;border-radius:999px;background:linear-gradient(90deg,#a9c0ff,#e3e8ef)}
+.bar em{font-style:normal;text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+.filters{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:10px;margin-bottom:14px}
+.filters input,.filters select{height:42px;padding:0 14px;border-radius:12px;background:rgba(4,8,20,.55);border:1px solid var(--line2);width:100%}
+.filters select option{background:var(--panel)}
+.tablewrap{border:1px solid var(--line);border-radius:18px;overflow:auto}
+table{width:100%;border-collapse:collapse;min-width:1100px}
+th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);background:rgba(255,255,255,.03);position:sticky;top:0;cursor:pointer;user-select:none;white-space:nowrap}
+tr:hover td{background:rgba(255,255,255,.02)}
+td.nome{font-weight:700;color:#fff}
+td small{display:block;color:var(--mute);font-size:.75rem}
+.wa{display:inline-flex;align-items:center;gap:6px;color:var(--wa);text-decoration:none;font-weight:700;white-space:nowrap}
+.tag{display:inline-block;font-size:.7rem;padding:3px 8px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid var(--line);margin:2px 2px 0 0;white-space:nowrap}
+select.status{height:34px;padding:0 10px;border-radius:10px;border:1px solid var(--line2);background:rgba(4,8,20,.55);font-weight:700}
+select.status option{background:var(--panel)}
+select.status[data-s="novo"]{color:#a9c0ff}
+select.status[data-s="em atendimento"]{color:#ffd479}
+select.status[data-s="fechado"]{color:#5ee49a}
+select.status[data-s="perdido"]{color:#ff8f9b}
+textarea{width:100%;min-width:180px;min-height:34px;padding:7px 10px;border-radius:10px;border:1px solid var(--line);background:rgba(4,8,20,.4);resize:vertical;font-size:.82rem}
+.del{border:0;background:none;color:var(--mute);cursor:pointer;font-size:1.1rem;padding:4px 8px;border-radius:8px}
+.del:hover{color:#ff8f9b;background:rgba(255,107,122,.1)}
+.empty{padding:60px 20px;text-align:center;color:var(--mute)}
+.empty b{display:block;color:#fff;font-size:1.05rem;margin-bottom:6px}
+.foot{display:flex;justify-content:space-between;color:var(--mute);font-size:.8rem;margin-top:12px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#16285a;border:1px solid var(--line2);padding:10px 18px;border-radius:999px;font-weight:700;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.on{opacity:1}
+@media (max-width:900px){.stats{grid-template-columns:1fr 1fr}.filters{grid-template-columns:1fr 1fr}.filters input{grid-column:1/-1}.bar{grid-template-columns:120px 1fr 32px}.top{padding:12px 16px}.btn.hide-m{display:none}}
+
+.login{min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(800px 500px at 80% 0%,rgba(56,88,170,.35),transparent 60%),linear-gradient(180deg,#070d1f,#0a1430)}
+.login form{width:100%;max-width:400px;padding:40px 32px 32px;border-radius:28px;background:linear-gradient(160deg,rgba(23,40,86,.92),rgba(9,17,40,.94));border:1px solid rgba(201,209,220,.32);box-shadow:0 30px 80px -20px rgba(0,0,0,.65)}
+.login .logo{width:76px;height:76px;border-radius:50%;margin:0 auto 18px;display:block}
+.login h1{text-align:center}
+.login p.sub{text-align:center;color:#8d98ad;font-size:.9rem;margin:6px 0 26px}
+.login label{display:block;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#c3cbd8;margin-bottom:7px}
+.login input{width:100%;height:50px;padding:0 16px;border-radius:14px;background:rgba(4,8,20,.55);border:1px solid rgba(201,209,220,.32);color:#fff;margin-bottom:14px}
+.login input:focus{outline:none;border-color:#c3cbd8;box-shadow:0 0 0 4px rgba(169,192,255,.14)}
+.login button{width:100%;height:54px;border:0;border-radius:999px;cursor:pointer;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#070d1f;margin-top:6px;background:var(--chrome)}
+.login button:disabled{opacity:.6;cursor:wait}
+.login .err{display:none;background:rgba(255,107,122,.12);border:1px solid rgba(255,107,122,.4);color:#ff8f9b;padding:10px 14px;border-radius:12px;font-size:.85rem;margin-bottom:16px;text-align:center}
+.app[hidden],.login[hidden]{display:none}
+</style>
+</head>
+<body>
+<div class="login" id="login">
+<form id="loginForm">
+  <img class="logo" src="../assets/logo-agitur.webp" alt="Agitur Viagens">
+  <h1>Painel de Leads</h1>
+  <p class="sub">Acesso restrito à equipe Agitur</p>
+  <div class="err" id="err">Usuário ou senha inválidos.</div>
+  <label for="user">Usuário</label>
+  <input id="user" name="user" autocomplete="username" required autofocus>
+  <label for="pass">Senha</label>
+  <input id="pass" name="pass" type="password" autocomplete="current-password" required>
+  <button type="submit" id="loginBtn">Entrar</button>
+</form>
+</div>
+<div class="app" id="app" hidden>
+<header class="top">
+  <div class="brand"><img src="../assets/logo-agitur.webp" alt=""><div><b>AGITUR</b><small>PAINEL DE LEADS</small></div></div>
+  <div class="actions">
+    <button class="btn hide-m" id="reload">↻ Atualizar</button>
+    <button class="btn primary" id="csv">⬇ Exportar CSV</button>
+    <button class="btn" id="logout">Sair</button>
+  </div>
+</header>
+
+<main>
+  <h1>Leads da Black Friday</h1>
+  <p class="lead-sub">Todos os envios do formulário da landing page. Atualiza sozinho a cada 60 segundos. <a href="https://docs.google.com/spreadsheets/d/1jypV75qSKZlZKbThJGH6IKn7USUJR3M4Rd6f96OmRpY/edit" target="_blank" rel="noopener" style="color:#a9c0ff">Abrir planilha</a></p>
+
+  <section class="stats">
+    <div class="stat"><small>Total de leads</small><b id="s-total">0</b><span id="s-filtered"></span></div>
+    <div class="stat"><small>Hoje</small><b id="s-hoje">0</b><span id="s-ontem"></span></div>
+    <div class="stat"><small>Últimos 7 dias</small><b id="s-7d">0</b><span id="s-media"></span></div>
+    <div class="stat"><small>Novos (sem atendimento)</small><b id="s-novos">0</b><span id="s-fechados"></span></div>
+  </section>
+
+  <section class="dest-bars"><h2>Leads por destino</h2><div id="bars"></div></section>
+
+  <section class="filters">
+    <input id="f-q" type="search" placeholder="Buscar por nome, WhatsApp, notas, campanha…">
+    <select id="f-dest"><option value="">Todos os destinos</option></select>
+    <select id="f-status"><option value="">Todos os status</option></select>
+    <input id="f-de" type="date" title="De">
+    <input id="f-ate" type="date" title="Até">
+  </section>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr>
+        <th data-k="criadoEm">Data ↓</th><th data-k="nome">Nome</th><th data-k="whatsapp">WhatsApp</th><th data-k="destino">Destino</th>
+        <th data-k="quando">Quando</th><th data-k="pessoas">Viajantes</th><th>Origem</th><th data-k="status">Status</th><th>Notas</th><th></th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div class="empty" id="empty" hidden><b>Nenhum lead encontrado</b>Os envios do formulário aparecem aqui assim que alguém preencher a landing page.</div>
+  </div>
+  <div class="foot"><span id="count"></span><span id="updated"></span></div>
+</main>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  var API = 'https://script.google.com/macros/s/AKfycbzGQrOPVFg_OM1lMItjdLPV3AsYt8KzRy6ReN-4d5E27DJKbnkN_RSi2G4zURHOK-rB/exec';
+  var all = [], statuses = [], sortKey = 'criadoEm', sortDir = -1, timer = null;
+  var $ = function(id){ return document.getElementById(id); };
+  var getToken = function(){ try { return sessionStorage.getItem('agitur_token') || ''; } catch (e) { return ''; } };
+  var setToken = function(t){ try { if (t) sessionStorage.setItem('agitur_token', t); else sessionStorage.removeItem('agitur_token'); } catch (e) {} };
+  function api(action, data){
+    var body = Object.assign({action:action, token:getToken()}, data || {});
+    return fetch(API, {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify(body)})
+      .then(function(r){ return r.json(); })
+      .then(function(d){ if (d && d.error === 'auth'){ logout(); throw new Error('auth'); } return d; });
+  }
+  function showApp(on){ $('app').hidden = !on; $('login').hidden = on; }
+  function logout(){ setToken(''); clearInterval(timer); all = []; showApp(false); }
+
+  function el(tag, attrs, children){
+    var n = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function(k){
+      if (k === 'text') n.textContent = attrs[k]; else if (k === 'className') n.className = attrs[k]; else n.setAttribute(k, attrs[k]);
+    });
+    (children || []).forEach(function(c){ if (c) n.appendChild(typeof c === 'string' ? document.createTextNode(c) : c); });
+    return n;
+  }
+  function toast(msg){ var t = $('toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(t._h); t._h = setTimeout(function(){ t.classList.remove('on'); }, 1800); }
+  function dayKey(d){ var x = new Date(d); return x.getFullYear() + '-' + String(x.getMonth()+1).padStart(2,'0') + '-' + String(x.getDate()).padStart(2,'0'); }
+  function fmt(d){ return new Date(d).toLocaleString('pt-BR', {day:'2-digit',month:'2-digit',year:'2-digit',hour:'2-digit',minute:'2-digit'}); }
+  function norm(s){ return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,''); }
+
+  function load(){
+    api('list').then(function(data){
+      if (!data.ok) throw new Error(data.error || 'erro');
+      all = data.leads || []; statuses = data.statuses || [];
+      fillSelects(); render();
+      $('updated').textContent = 'Atualizado às ' + new Date().toLocaleTimeString('pt-BR');
+    }).catch(function(e){ if (e.message !== 'auth') toast('Erro ao carregar leads'); });
+  }
+
+  function fillSelects(){
+    var fd = $('f-dest'), cur = fd.value, dests = {};
+    all.forEach(function(l){ dests[l.destino] = 1; });
+    fd.length = 1; Object.keys(dests).sort().forEach(function(d){ fd.appendChild(el('option', {value:d, text:d})); }); fd.value = cur;
+    var fs = $('f-status'), cs = fs.value;
+    if (fs.length === 1) statuses.forEach(function(s){ fs.appendChild(el('option', {value:s, text:s.charAt(0).toUpperCase() + s.slice(1)})); });
+    fs.value = cs;
+  }
+
+  function filtered(){
+    var q = norm($('f-q').value), d = $('f-dest').value, s = $('f-status').value, de = $('f-de').value, ate = $('f-ate').value;
+    var qd = q.replace(/\D/g,'');
+    return all.filter(function(l){
+      if (d && l.destino !== d) return false;
+      if (s && l.status !== s) return false;
+      var k = dayKey(l.criadoEm);
+      if (de && k < de) return false;
+      if (ate && k > ate) return false;
+      if (q){
+        var u = l.utm || {};
+        var hay = norm([l.nome, l.whatsapp, l.destino, l.quando, l.pessoas, l.notas, l.origem, u.utm_source, u.utm_medium, u.utm_campaign, u.utm_content].join(' '));
+        if (hay.indexOf(q) < 0 && !(qd.length >= 3 && (l.whatsappDigitos || '').indexOf(qd) >= 0)) return false;
+      }
+      return true;
+    }).sort(function(a, b){
+      var x = String(a[sortKey] || ''), y = String(b[sortKey] || '');
+      return x.localeCompare(y, 'pt-BR', {numeric:true}) * sortDir;
+    });
+  }
+
+  function stats(list){
+    var today = dayKey(new Date()), yest = dayKey(Date.now() - 864e5), week = Date.now() - 7 * 864e5;
+    var h = 0, o = 0, w = 0, n = 0, f = 0;
+    all.forEach(function(l){
+      var k = dayKey(l.criadoEm);
+      if (k === today) h++; if (k === yest) o++;
+      if (new Date(l.criadoEm).getTime() >= week) w++;
+      if (l.status === 'novo') n++; if (l.status === 'fechado') f++;
+    });
+    $('s-total').textContent = all.length;
+    $('s-filtered').textContent = list.length !== all.length ? list.length + ' no filtro atual' : '';
+    $('s-hoje').textContent = h; $('s-ontem').textContent = 'Ontem: ' + o;
+    $('s-7d').textContent = w; $('s-media').textContent = 'Média ' + (w / 7).toFixed(1).replace('.', ',') + '/dia';
+    $('s-novos').textContent = n; $('s-fechados').textContent = f + ' fechado' + (f === 1 ? '' : 's');
+
+    var by = {}; list.forEach(function(l){ by[l.destino] = (by[l.destino] || 0) + 1; });
+    var arr = Object.keys(by).map(function(k){ return [k, by[k]]; }).sort(function(a, b){ return b[1] - a[1]; });
+    var max = arr.length ? arr[0][1] : 1, bars = $('bars'); bars.textContent = '';
+    if (!arr.length) bars.appendChild(el('div', {text:'Sem dados ainda.', style:'color:var(--mute)'}));
+    arr.forEach(function(a){
+      var i = el('i'); i.style.width = Math.max(3, a[1] / max * 100) + '%';
+      bars.appendChild(el('div', {className:'bar'}, [el('span', {text:a[0]}), el('div', null, [i]), el('em', {text:String(a[1])})]));
+    });
+  }
+
+  function patch(id, body){
+    return api('update', Object.assign({id:id}, body)).then(function(d){ if (!d.ok) throw 0; return d; });
+  }
+
+  function render(){
+    var list = filtered(), tb = $('rows'); tb.textContent = '';
+    stats(list);
+    $('empty').hidden = list.length > 0;
+    $('count').textContent = list.length + ' de ' + all.length + ' leads';
+    list.forEach(function(l){
+      var u = l.utm || {}, tags = [];
+      tags.push(el('span', {className:'tag', text:l.origem || 'Formulário'}));
+      ['utm_source','utm_medium','utm_campaign'].forEach(function(k){ if (u[k]) tags.push(el('span', {className:'tag', text:k.replace('utm_','') + ': ' + u[k]})); });
+
+      var digits = l.whatsappDigitos || ''; if (digits.length > 11 && digits.indexOf('55') === 0) digits = digits.slice(2);
+      var msg = 'Olá, ' + l.nome.split(' ')[0] + '! Aqui é da Agitur Viagens. Recebemos seu pedido de cotação Black Friday para ' + l.destino + '.';
+      var wa = el('a', {className:'wa', href:'https://wa.me/55' + digits + '?text=' + encodeURIComponent(msg), target:'_blank', rel:'noopener', text:'● ' + l.whatsapp});
+
+      var st = el('select', {className:'status', 'data-s':l.status});
+      statuses.forEach(function(s){ var o = el('option', {value:s, text:s}); if (s === l.status) o.selected = true; st.appendChild(o); });
+      st.addEventListener('change', function(){
+        var v = st.value;
+        patch(l.id, {status:v}).then(function(){ l.status = v; st.setAttribute('data-s', v); stats(filtered()); toast('Status atualizado'); })
+          .catch(function(){ st.value = l.status; toast('Erro ao salvar'); });
+      });
+
+      var notes = el('textarea', {placeholder:'Anotações…'}); notes.value = l.notas || '';
+      notes.addEventListener('change', function(){
+        patch(l.id, {notas:notes.value}).then(function(){ l.notas = notes.value; toast('Nota salva'); }).catch(function(){ toast('Erro ao salvar'); });
+      });
+
+      var del = el('button', {className:'del', title:'Excluir lead', text:'✕'});
+      del.addEventListener('click', function(){
+        if (!confirm('Excluir o lead de ' + l.nome + '? Esta ação não pode ser desfeita.')) return;
+        api('delete', {id:l.id}).then(function(d){
+          if (!d.ok) throw 0; all = all.filter(function(x){ return x.id !== l.id; }); render(); toast('Lead excluído');
+        }).catch(function(){ toast('Erro ao excluir'); });
+      });
+
+      tb.appendChild(el('tr', null, [
+        el('td', null, [fmt(l.criadoEm)]),
+        el('td', {className:'nome'}, [l.nome]),
+        el('td', null, [wa]),
+        el('td', null, [l.destino]),
+        el('td', null, [l.quando || '—']),
+        el('td', null, [l.pessoas || '—']),
+        el('td', null, tags),
+        el('td', null, [st]),
+        el('td', null, [notes]),
+        el('td', null, [del])
+      ]));
+    });
+  }
+
+  ['f-q','f-dest','f-status','f-de','f-ate'].forEach(function(id){ $(id).addEventListener('input', render); });
+  document.querySelectorAll('th[data-k]').forEach(function(th){
+    th.addEventListener('click', function(){
+      var k = th.getAttribute('data-k');
+      if (sortKey === k) sortDir *= -1; else { sortKey = k; sortDir = k === 'criadoEm' ? -1 : 1; }
+      document.querySelectorAll('th[data-k]').forEach(function(t){ t.textContent = t.textContent.replace(/ [↑↓]$/, ''); });
+      th.textContent += sortDir === 1 ? ' ↑' : ' ↓';
+      render();
+    });
+  });
+  $('reload').addEventListener('click', load);
+  $('logout').addEventListener('click', logout);
+
+  function csvExport(){
+    var cols = ['criadoEm','nome','whatsapp','destino','quando','pessoas','status','notas','origem','utm_source','utm_medium','utm_campaign','utm_content','utm_term','referrer','pagina','id'];
+    var esc = function(v){ var s = String(v == null ? '' : v); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return /[";\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+    var lines = [cols.join(';')];
+    filtered().forEach(function(r){ lines.push(cols.map(function(c){ return esc(c.indexOf('utm_') === 0 ? (r.utm || {})[c] : r[c]); }).join(';')); });
+    var blob = new Blob(['﻿' + lines.join('\r\n')], {type:'text/csv;charset=utf-8'});
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'leads-agitur-' + dayKey(new Date()) + '.csv';
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1000);
+  }
+  $('csv').addEventListener('click', csvExport);
+
+  function start(){
+    showApp(true); load();
+    clearInterval(timer);
+    timer = setInterval(function(){ if (!document.querySelector('textarea:focus, select:focus')) load(); }, 60000);
+  }
+  $('loginForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var btn = $('loginBtn'), err = $('err');
+    btn.disabled = true; btn.textContent = 'Entrando…'; err.style.display = 'none';
+    api('login', {user:$('user').value.trim(), pass:$('pass').value}).then(function(d){
+      if (!d.ok){ err.textContent = d.error === 'bloqueado' ? 'Muitas tentativas. Aguarde 15 minutos.' : 'Usuário ou senha inválidos.'; err.style.display = 'block'; return; }
+      setToken(d.token); $('pass').value = ''; start();
+    }).catch(function(){ err.textContent = 'Não foi possível conectar. Tente novamente.'; err.style.display = 'block'; })
+      .then(function(){ btn.disabled = false; btn.textContent = 'Entrar'; });
+  });
+  if (getToken()) start(); else showApp(false);
+})();
+</script>
+</body>
+</html>
