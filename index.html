@@ -592,6 +592,7 @@ button,input,select{font:inherit;color:inherit}
             </select>
           </div>
         </div>
+        <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
         <button type="submit" class="btn btn-chrome btn-block">Quero minha tarifa Black <svg><use href="#i-arrow"/></svg></button>
         <p class="form-note"><svg><use href="#i-lock"/></svg>Seus dados estão seguros. Sem spam.</p>
       </form>
@@ -859,7 +860,27 @@ button,input,select{font:inherit;color:inherit}
     phoneLabel: '(31) 8400-0068',
     group: 'https://chat.whatsapp.com/HJt4itqDR6QIKngeEu1HzL',
     deadline: '2026-11-30T23:59:59-03:00',                       // fim da campanha (horário de Brasília)
-    defaultMsg: 'Olá, Agitur! Vim pela página da Black Friday e quero saber das ofertas.'
+    defaultMsg: 'Olá, Agitur! Vim pela página da Black Friday e quero saber das ofertas.',
+    leadsApi: '/api/leads'                                        // endpoint que grava os leads (painel em /admin)
+  };
+
+  /* UTMs da campanha: guardadas na sessão para acompanhar o lead mesmo se ele navegar pela página */
+  var UTM_KEYS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
+  var utm = {};
+  try{
+    var qs = new URLSearchParams(location.search);
+    UTM_KEYS.forEach(function(k){ var v = qs.get(k) || sessionStorage.getItem(k); if (v){ utm[k] = v; sessionStorage.setItem(k, v); } });
+  }catch(e){}
+
+  var saveLead = function(data){
+    var payload = JSON.stringify(Object.assign({}, data, utm, {referrer: document.referrer, pagina: location.href}));
+    try{
+      if (window.fetch){
+        fetch(CONFIG.leadsApi, {method:'POST', headers:{'Content-Type':'application/json'}, body:payload, keepalive:true}).catch(function(){});
+      } else if (navigator.sendBeacon){
+        navigator.sendBeacon(CONFIG.leadsApi, new Blob([payload], {type:'application/json'}));
+      }
+    }catch(e){}
   };
 
   var waLink = function(msg){ return 'https://wa.me/' + CONFIG.whatsapp + '?text=' + encodeURIComponent(msg); };
@@ -941,7 +962,9 @@ button,input,select{font:inherit;color:inherit}
       '*Destino:* ' + destino + '\n' +
       '*Quando:* ' + form.quando.value + '\n' +
       '*Viajantes:* ' + form.pessoas.value;
+    if (form.website && form.website.value) return; // honeypot anti-bot
     track('generate_lead', {destination:destino});
+    saveLead({nome:nome, whats:form.whats.value, destino:destino, quando:form.quando.value, pessoas:form.pessoas.value, origem:'Formulário Black Friday'});
     window.open(waLink(msg), '_blank', 'noopener');
     card.classList.add('done');
     card.scrollIntoView({behavior:'smooth', block:'center'});
